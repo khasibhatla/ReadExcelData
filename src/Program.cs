@@ -16,7 +16,7 @@ namespace ReadExcelData
     class Program
     {
         const string PSV_PATH = @"C:\Dev\Github\RMC\Data.csv";
-        const string EXCEL_FILE_PATH = @"C:\Dev\Github\RMC\Data-New.xlsx";
+        const string EXCEL_FILES_PATH = @"C:\Dev\GitHub\RMC\Data";
         excel.Application app = null;
         excel.Workbook workbook = null;
 
@@ -44,62 +44,67 @@ namespace ReadExcelData
             try
             {
                 app = new excel.Application();
-                workbook = app.Workbooks.Open(EXCEL_FILE_PATH);
-                excel.Range previous = null;                
-                
-                // Reading the first worksheet at this time
-                var sheet = workbook.Sheets[1];
 
-                var columns = sheet.UsedRange.Cells.Columns.Count + 1;
-                var rows = sheet.UsedRange.Cells.Rows.Count + 1;
-                var max = columns * rows;
-
-                qnas = new List<QnA>(max);
-
-                var qna = new QnA();
-                int qCnt = 1;
-                var states = new string[columns-3];
-                
-                // First row has the state names
-                for (int column = 1; column <= columns-1; column++)
-                {                    
-                    if(!string.IsNullOrWhiteSpace(sheet.Cells[1, column].Text.Trim()))
-                    {
-                        states[column-3] = sheet.Cells[1, column].Text.Trim();
-                    }                    
-                }
-
-                //Iterating from row 2 because first row contains states  
-                for (int row = 2; row < sheet.UsedRange.Cells.Rows.Count; row++)
+                foreach (var file in Directory.GetFiles(EXCEL_FILES_PATH))
                 {
-                    previous = sheet.Cells[row, 1];
+                    workbook = app.Workbooks.Open(file);
+                    excel.Range previous = null;
 
-                    if (Convert.ToString(previous.Text).Trim().StartsWith("Q:"))
+                    // Reading the first worksheet at this time
+                    var sheet = workbook.Sheets[1];
+
+                    var columns = sheet.UsedRange.Cells.Columns.Count + 1;
+                    var rows = sheet.UsedRange.Cells.Rows.Count + 1;
+                    var max = columns * rows;
+
+                    qnas = new List<QnA>(max);
+
+                    var qna = new QnA();
+                    int qCnt = 1;
+                    var states = new string[columns - 3];
+
+                    // First row has the state names
+                    for (int column = 1; column <= columns - 1; column++)
                     {
-                        for (int cnt = 0; cnt < states.Length; cnt++)
+                        if (!string.IsNullOrWhiteSpace(sheet.Cells[1, column].Text.Trim()))
                         {
-                            var state = states[cnt];
-
-                            qna = new QnA
-                            {
-                                Question = Convert.ToString(sheet.Cells[row, 2].Text).Trim(),
-                                AnswerDescription = Convert.ToString(sheet.Cells[row + 1, 2].Text).Trim(),
-                                State = state,
-                                Answer = Convert.ToString(sheet.Cells[row + 1, 3 + cnt].Text).Trim(),
-
-                            };
-                            qnas.Add(qna);
+                            states[column - 3] = sheet.Cells[1, column].Text.Trim();
                         }
-                        Console.WriteLine("Done reading {0} answers for question: {1}", states.Length, qCnt);
-                        qCnt++;
                     }
-                    else
-                    {
-                        continue;
-                    }
-                }
 
-                Console.WriteLine("We have {0} questions & answers", qnas.Count);
+                    //Iterating from row 2 because first row contains states  
+                    for (int row = 2; row < sheet.UsedRange.Cells.Rows.Count; row++)
+                    {
+                        previous = sheet.Cells[row, 1];
+
+                        if (Convert.ToString(previous.Text).Trim().StartsWith("Q:"))
+                        {
+                            for (int cnt = 0; cnt < states.Length; cnt++)
+                            {
+                                var state = states[cnt];
+
+                                qna = new QnA
+                                {
+                                    Question = Convert.ToString(sheet.Cells[row, 2].Text).Trim(),
+                                    AnswerDescription = Convert.ToString(sheet.Cells[row + 1, 2].Text).Trim(),
+                                    State = state,
+                                    Answer = Convert.ToString(sheet.Cells[row + 1, 3 + cnt].Text).Trim(),
+
+                                };
+                                qnas.Add(qna);
+                            }
+                            Console.WriteLine("Done reading {0} answers for question: {1}", states.Length, qCnt);
+                            qCnt++;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    Console.WriteLine("We have {0} questions & answers from the file : {1} ", qnas.Count, file);
+                }
+                
             }
             catch (Exception ex)
             {
