@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadMergedCells", "src\ReadMergedCells.csproj", "{713D18EB-8A22-4CEC-9B8F-08B13DCED2E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadExcelData", "src\ReadExcelData.csproj", "{2C227F44-0FB8-45C4-ADB2-2D9915EB6597}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{713D18EB-8A22-4CEC-9B8F-08B13DCED2E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{713D18EB-8A22-4CEC-9B8F-08B13DCED2E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{713D18EB-8A22-4CEC-9B8F-08B13DCED2E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{713D18EB-8A22-4CEC-9B8F-08B13DCED2E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C227F44-0FB8-45C4-ADB2-2D9915EB6597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C227F44-0FB8-45C4-ADB2-2D9915EB6597}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C227F44-0FB8-45C4-ADB2-2D9915EB6597}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C227F44-0FB8-45C4-ADB2-2D9915EB6597}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
