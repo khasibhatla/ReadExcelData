@@ -77,7 +77,7 @@ namespace ReadExcelData
                     {
                         previous = sheet.Cells[row, 1];
 
-                        if (Convert.ToString(previous.Text).Trim().StartsWith("Q:"))
+                        if (Convert.ToString(previous.Text).Trim().StartsWith("Q:") || Convert.ToString(previous.Text).Trim().StartsWith("Q;"))
                         {
                             for (int cnt = 0; cnt < states.Length; cnt++)
                             {
